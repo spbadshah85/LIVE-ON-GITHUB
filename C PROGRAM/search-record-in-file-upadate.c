@@ -12,6 +12,7 @@ struct record{
 struct record student;
 // function to search and update a record in the file 
 
+
 void searchAndUpdateRecord(int targetRollNumber,float newMarks){
    
 
@@ -27,7 +28,7 @@ void searchAndUpdateRecord(int targetRollNumber,float newMarks){
             fseek(file,-1* sizeof(struct record),SEEK_CUR);
 
             // move the file pointer bacck to the start of the record 
-
+            printf("%d %s %.2f\n",student.rollNumber,student.name,student.marks);
             student.marks= newMarks;
             fprintf(file,"%d %s %.2f\n",student.rollNumber,student.name,student.marks);
 
@@ -52,6 +53,17 @@ void searchAndUpdateRecord(int targetRollNumber,float newMarks){
 
     }
     void addStudentRecord(int rollNumber ,char name[50],float marks){
+         int flag=0;
+          while(fscanf(file,"%d %s %f",&student.rollNumber,student.name,&student.marks) != EOF ){
+        // check if current record match the target roll number 
+            flag=1;
+        if(student.rollNumber==rollNumber){ 
+
+            printf("these roll no. %d is already exist.",student.rollNumber);
+            
+        }
+        else{
+
             fseek(file,-1* sizeof(struct record),SEEK_CUR);
 
             // move the file pointer bacck to the start of the record 
@@ -61,9 +73,23 @@ void searchAndUpdateRecord(int targetRollNumber,float newMarks){
 
             fprintf(file,"%d %s %.2f\n",student.rollNumber,student.name,student.marks);
 
+             printf("RECORDs with roll number %d added successfully. \n ", rollNumber);
+             fflush(stdin);
+             break;
+        }
+          }
+           /* if(flag==0){
+           fseek(file,-1* sizeof(struct record),SEEK_CUR);
+
+            // move the file pointer bacck to the start of the record 
+            student.rollNumber= rollNumber;
+            strcpy(student.name,name);
+            student.marks= marks;
+
+            fprintf(file,"%d %s %.2f\n",student.rollNumber,student.name,student.marks);
+
              printf("RECORD with roll number %d added successfully. \n ", rollNumber);
-
-
+            }*/
     }
     int main ()
     {
@@ -95,8 +121,9 @@ void searchAndUpdateRecord(int targetRollNumber,float newMarks){
                 printf("enter roll number to add : ");
                 scanf("%d",&targetRollNumber);
                 printf("enter the name : ");
-                //gets(name);
-                scanf("%s",name);
+                fflush(stdin);
+                gets(name);
+                //scanf("%s",name);
                 printf("enter the  marks :");
                 scanf("%f",&newMarks);
 
