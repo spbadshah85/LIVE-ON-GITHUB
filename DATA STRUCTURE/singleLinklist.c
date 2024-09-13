@@ -32,21 +32,19 @@ void insertNode(char position){
             if(position=='F'){
                 printf("first insert :");
                 start=temp;
-                temp->link=t;
-            }
-            if(position=='L'){
-                 printf("LLLL :");
+                start->link=t;
+            } if(position=='L'){
                 while(t->link!=NULL){
                     t=t->link;
-                     printf("loop :");
                 }
+                t->link=temp;
             }
-            t->link=temp;
+            
         }
 }
 
 void deleteNode(char position){
-    struct node * d;
+    struct node *d;
     if(start==NULL)
         printf("List is Empty");
     else{
@@ -55,7 +53,7 @@ void deleteNode(char position){
         
         start =start->link;
     }
-    if(position=='L'){
+    else{
          while(d->link!=NULL)
             d=d->link;
     }  
@@ -64,14 +62,14 @@ void deleteNode(char position){
 }
 
 void viewNode(){
-    struct node * t= start;
+    struct node *t= start;
     if(start==NULL)
         printf("List is Empty");
     else{
-         while(t->link!=NULL){
+        do{
             printf("%d  ",t->info);
             t=t->link;
-         }  
+        }while(t);
     }
 }
 int menu()
@@ -88,27 +86,28 @@ int menu()
     return(ch);
 }
 int main(){
-     int choice=menu();
+     int choice;
     while(1){
+        choice=menu();
        
         switch(choice){
-            case 1 : 
+            case 1: 
                insertNode('F');
                break;
-            case 2 :
+            case 2:
                 insertNode('L');
                 break;
-            case 3 : 
+            case 3: 
                 deleteNode('F');
                 break;
-            case 4 :
+            case 4:
                 deleteNode('L');
                 break;
-            case 5 : 
+            case 5: 
                 viewNode();
                 break;
-            case 6 :
-                exit(0); 
+            case 6:
+                exit(1); 
             default :
                 printf("Please enter a valid choice.");
                 //choice=menu();
